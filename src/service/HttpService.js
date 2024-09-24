@@ -47,3 +47,53 @@ export const GET_USER = (userId) => {
 
     return request
 }
+
+export const GET_CART = (userId) => {
+    var request = fetch(BASE_URL + 'cart/' + userId, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('tokenKey')
+        }
+    })
+
+    return request
+}
+
+export const GET_CART_ITEMS = (userId) => {
+    var request = fetch(BASE_URL + 'cart/products/' + userId, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('tokenKey')
+        }
+    })
+
+    return request
+}
+
+export const REMOVE_FROM_CART = (body) => {
+    var request = fetch(BASE_URL + 'cart/remove', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('tokenKey')
+        },
+        body: JSON.stringify(body)
+    })
+
+    return request
+}
+
+export const ADD_TO_CART = (body) => {
+    var request = fetch(BASE_URL + 'cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('tokenKey')
+        },
+        body: JSON.stringify(body)
+    })
+
+    return request
+}
