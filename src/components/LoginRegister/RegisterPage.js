@@ -2,20 +2,22 @@ import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { InputText } from "primereact/inputtext";
 import React, { useRef, useState } from "react";
-import { LOGIN } from "../../service/HttpService";
+import { LOGIN, REGISTER } from "../../service/HttpService";
 import { Messages } from "primereact/messages";
 import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
-    const [checked, setChecked] = useState(false);
+    const [fullName, setFullName] = useState('');
     const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+    const [password1, setPassword1] = useState('');
+    const [password2, setPassword2] = useState('');
+
     const navigate = useNavigate();
     const msgs = useRef(null);
 
-    const addMessages = () => {
+    const addMessages = (message) => {
         msgs.current.show([
-            { severity: 'error', summary: 'Hata', detail: 'Kullanıcı Adı/Şifre Yanlış!', sticky: true, closable: false }
+            { severity: 'error', summary: 'Hata', detail: message, sticky: true, closable: false }
         ]);
     };
     const clearMessages = () => {
@@ -23,7 +25,15 @@ export default function RegisterPage() {
     };
     const register = () => {
         clearMessages();
-        LOGIN({ userName : userName, password : password })
+        if (fullName === "" || userName === "" || password1 === "" || password2 === "") {
+            addMessages("Tüm alanları doldurunuz");
+            return;
+        }
+        if (password1 !== password2) {
+            addMessages("Parolalar eşleşmiyor");
+            return;
+        }
+        REGISTER({ fullName: fullName, userName: userName, password: password1 })
             .then(response => response.json())
             .then((result) => {
                 localStorage.setItem("tokenKey", result.accessToken);
@@ -34,10 +44,9 @@ export default function RegisterPage() {
                 console.log(localStorage)
             })
             .catch((error) => {
-                addMessages();
+                addMessages(error.message);
                 console.error('Error while login', error)
             });
-
     }
 
     return (
@@ -50,14 +59,20 @@ export default function RegisterPage() {
                 </div>
 
                 <div>
+                    <label htmlFor="fullNameLogin" className="block text-900 font-medium mb-2">Tam Ad Giriniz:</label>
+                    <InputText id="fullNameLogin" type="text" placeholder="Tam Ad" className="w-full mb-3" value={fullName} onChange={(e) => setFullName(e.target.value)} />
+
                     <label htmlFor="userNameLogin" className="block text-900 font-medium mb-2">Kullanıcı Adı:</label>
                     <InputText id="userNameLogin" type="text" placeholder="Kullanıcı Adı" className="w-full mb-3" value={userName} onChange={(e) => setUserName(e.target.value)} />
 
-                    <label htmlFor="password" className="block text-900 font-medium mb-2">Parola:</label>
-                    <InputText id="password" type="password" placeholder="Parola" className="w-full mb-3" value={password} onChange={(e) => setPassword(e.target.value)} />
-                    
+                    <label htmlFor="password" className="block text-900 font-medium mb-2">Parola Giriniz:</label>
+                    <InputText id="password" type="password" placeholder="Parola" className="w-full mb-3" value={password1} onChange={(e) => setPassword1(e.target.value)} />
+
+                    <label htmlFor="password" className="block text-900 font-medium mb-2">Parolayı Tekrar Giriniz:</label>
+                    <InputText id="password" type="password" placeholder="Parola" className="w-full mb-3" value={password2} onChange={(e) => setPassword2(e.target.value)} />
+
                     <Button label="Kayıt Ol" icon="pi pi-user" className="w-full" onClick={register} />
-                    
+
                     <Messages ref={msgs} />
                 </div>
             </div>

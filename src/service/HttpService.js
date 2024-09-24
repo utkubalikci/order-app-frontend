@@ -23,3 +23,15 @@ export const LOGIN = (body) => {
 
     return request
 }
+
+export const REGISTER = (body) => {
+    var request = fetch(BASE_URL + 'auth/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    })
+
+    return request
+}
