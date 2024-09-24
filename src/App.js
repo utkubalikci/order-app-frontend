@@ -2,7 +2,6 @@ import { BrowserRouter, Navigate, Route, Router, Routes } from 'react-router-dom
 import './App.css';
 import { PrimeReactProvider } from 'primereact/api';
 import Products from './components/Product/Products';
-import ProductCard from './components/Product/ProductCard';
 
 // import "primereact/resources/themes/lara-light-cyan/theme.css";
 
@@ -15,6 +14,8 @@ import 'primeicons/primeicons.css';                         // PrimeIcons
 import 'primeflex/primeflex.css';                           // PrimeFlex (Grid ve layout düzenlemeleri için)
 import LoginPage from './components/LoginRegister/LoginPage';
 import RegisterPage from './components/LoginRegister/RegisterPage';
+import Cart from './components/Cart/Cart';
+import Navbar from './components/Navbar/Navbar';
 
 
 function App({ Component, pageProps }) {
@@ -22,12 +23,16 @@ function App({ Component, pageProps }) {
     <div>
       <PrimeReactProvider>
         <BrowserRouter>
+          <Navbar />
           <Routes>
+            <Route path='/' element={<Products />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path="/myProfile" element={<Profile />} />
+            <Route path="/cart" element={<Cart />} />
             <Route path="/toLogin" element={<LinkToLogin />} />
             <Route path="/product" element={<Products />} />
+            <Route path='/*' element={<Navigate to="/toLogin" />} />
           </Routes>
         </BrowserRouter>
       </PrimeReactProvider>
