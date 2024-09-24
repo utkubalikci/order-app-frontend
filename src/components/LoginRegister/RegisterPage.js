@@ -40,8 +40,7 @@ export default function RegisterPage() {
                 localStorage.setItem("refreshKey", result.refreshToken);
                 localStorage.setItem("currentUser", result.userId);
                 localStorage.setItem("userName", userName)
-                console.log("giris yapildi")
-                console.log(localStorage)
+                navigate('/myProfile');
             })
             .catch((error) => {
                 addMessages(error.message);

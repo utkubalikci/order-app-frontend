@@ -35,3 +35,15 @@ export const REGISTER = (body) => {
 
     return request
 }
+
+export const GET_USER = (userId) => {
+    var request = fetch(BASE_URL + 'users/' + userId, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('tokenKey')
+        }
+    })
+
+    return request
+}
