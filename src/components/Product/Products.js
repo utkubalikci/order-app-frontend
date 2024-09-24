@@ -1,17 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button } from 'primereact/button';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
 import { Rating } from 'primereact/rating';
 import { Tag } from 'primereact/tag';
 import { classNames } from 'primereact/utils';
-import { GET_ALL_PRODUCTS } from '../../service/HttpService';
+import { ADD_TO_CART, GET_ALL_PRODUCTS } from '../../service/HttpService';
 import { ListBox } from 'primereact/listbox';
+import { Toast } from 'primereact/toast';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
     const [layout, setLayout] = useState('grid');
     const [categories, setCategories] = useState(['Bilgisayar', 'Telefon']);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const toast = useRef(null);
+
+    const showSuccessToast = () => {
+        toast.current.show({ severity: 'success', summary: 'Ürün sepete eklendi', life: 3000 });
+    }
+
+    const showErrorToast = () => {
+        toast.current.show({ severity: 'error', summary: 'Ürün sepete eklenirken bir hata oluştu', life: 3000 });
+    }
 
     useEffect(() => {
         GET_ALL_PRODUCTS()
@@ -21,20 +31,29 @@ export default function Products() {
     }, []);
 
     const getSeverity = (product) => {
-        switch (product.inventoryStatus) {
-            case 'INSTOCK':
-                return 'success';
-
-            case 'LOWSTOCK':
-                return 'warning';
-
-            case 'OUTOFSTOCK':
-                return 'danger';
-
-            default:
-                return null;
+        if (product.stock > 5) {
+            return 'success';
+        } else if (product.stock > 0) {
+            return 'warning';
+        } else if (product.stock === 0) {
+            return 'danger';
+        } else {
+            return null; // Handle cases where stock is negative or undefined
         }
     };
+
+    const addToCart = (productId) => {
+        ADD_TO_CART({ userId: parseInt(localStorage.getItem('currentUser')), productId: productId, quantity: 1 })
+            .then(() => {
+                console.log('Item added to cart')
+                showSuccessToast()
+            })
+            .catch(
+                (error) => {
+                    showErrorToast()
+                    console.error('Error while adding item to cart', error)
+                });
+    }
 
     const listItem = (product, index) => {
         return (
@@ -55,8 +74,8 @@ export default function Products() {
                             </div>
                         </div>
                         <div className="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2">
-                            <span className="text-2xl font-semibold">${product.price}</span>
-                            <Button icon="pi pi-shopping-cart" className="p-button-rounded p-button-sm" disabled={product.stock === 0}></Button>
+                            <span className="text-2xl font-semibold">{product.price}₺</span>
+                            <Button icon="pi pi-shopping-cart" className="p-button-rounded p-button-sm" disabled={product.stock === 0} onClick={() => addToCart(product.id)}></Button>
                         </div>
                     </div>
                 </div>
@@ -81,8 +100,8 @@ export default function Products() {
                         <div className="text-700">{product.description}</div> {/* Ürün açıklaması eklendi */}
                     </div>
                     <div className="flex align-items-center justify-content-between">
-                        <span className="text-2xl font-semibold">${product.price}</span>
-                        <Button icon="pi pi-shopping-cart" className="p-button-rounded p-button-sm" disabled={product.stock === 0}></Button>
+                        <span className="text-2xl font-semibold">{product.price}₺</span>
+                        <Button icon="pi pi-shopping-cart" className="p-button-rounded p-button-sm" disabled={product.stock === 0} onClick={() => addToCart(product.id)}></Button>
                     </div>
                 </div>
             </div>
@@ -111,13 +130,14 @@ export default function Products() {
     };
 
     return (
-        <div className="card grid">
-            <div className="col-4 md:col-4">
+        <div className="flex">
+            <Toast ref={toast} />
+            <div className="col-12 md:col-4">
                 <ListBox className="w-full" filter value={selectedCategory} onChange={(e) => setSelectedCategory(e.value)} options={categories} optionLabel="name" />
             </div>
-            <div className="col-8 md:col-8">
+            <div className="col-12 md:col-8">
                 <DataView value={products} listTemplate={listTemplate} layout={layout} header={header()} />
             </div>
         </div>
-    )
+    );
 }
