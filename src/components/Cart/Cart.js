@@ -75,7 +75,7 @@ export default function Cart() {
         </div>
     );
     const footer = <div>
-        Total Price: {totalPrice}
+        Toplam Fiyat: {totalPrice}₺
         <Button label="Sipariş Ver" icon="pi pi-cart-arrow-down" severity="success" className="w-full" onClick={giveOrder} />
 
         <Messages ref={msgs} />
@@ -104,12 +104,6 @@ export default function Cart() {
                         <Column header="Toplam Fiyat" body={(rowData) => rowData.price * rowData.quantity}></Column>
                     </DataTable>
                 </div>
-
-                {/* <div>
-                    <Button label="Sipariş Ver" icon="pi pi-cart-arrow-down" severity="success" className="w-full" onClick={giveOrder} />
-
-                    <Messages ref={msgs} />
-                </div> */}
             </div>
         </div>
     )

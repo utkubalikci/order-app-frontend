@@ -6,7 +6,6 @@ import { Button } from 'primereact/button';
 export default function Profile() {
     const [userName, setUserName] = useState('');
     const [fullName, setFullName] = useState('');
-    const [user, setUser] = useState(() => {});
     const navigate = useNavigate();
 
     useEffect(() => {
