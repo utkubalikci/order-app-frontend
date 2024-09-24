@@ -42,8 +42,9 @@ export default function Profile() {
                 <div>
 
 
-                    <Button label="Ana Sayfa"  icon="pi pi-home" className="my-1 w-full" onClick={() => navigate('/')}/>
+                    <Button label="Hesap Ayarları (Yakında)"  icon="pi pi-cog" className="my-1 w-full"/>
                     <Button label="Sepetim" severity='success' icon="pi pi-shopping-cart" className="my-1 w-full" onClick={() => navigate('/cart')}/>
+                    <Button label="Siparişlerim" severity='warning' icon="pi pi-shopping-bag" className="my-1 w-full" onClick={() => navigate('/cart')}/>
                     <Button label="Çıkış Yap" severity='danger' icon="pi pi-sign-out" className="my-1 w-full" onClick={logout}/>
 
                 </div>
