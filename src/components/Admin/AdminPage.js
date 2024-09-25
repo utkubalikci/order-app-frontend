@@ -43,7 +43,6 @@ export default function AdminPage() {
     }
 
     const saveProduct = () => {
-        console.log("ürün kaydetme fonksiyonu çalıştı");
         if (name === '' || stock === 0 || price === 0 || description === '' || image === '' || selectedCategory === null) {
             showWarningToast("Lütfen tüm alanları doldurun.", "");
             return;

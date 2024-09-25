@@ -1,17 +1,16 @@
-import { BrowserRouter, Navigate, Route, Router, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import './App.css';
 import { PrimeReactProvider } from 'primereact/api';
 import Products from './components/Product/Products';
 
-// import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LinkToLogin from './components/LoginRegister/LinkToLogin';
 import Profile from './components/Profile/Profile';
 import 'primereact/resources/themes/saga-blue/theme.css';   // Tema dosyası
-import 'primereact/resources/primereact.min.css';           // Primereact CSS
+import 'primereact/resources/primereact.min.css';           // Primereact
 import 'primeicons/primeicons.css';                         // PrimeIcons
-import 'primeflex/primeflex.css';                           // PrimeFlex (Grid ve layout düzenlemeleri için)
+import 'primeflex/primeflex.css';                           // PrimeFlex
 import LoginPage from './components/LoginRegister/LoginPage';
 import RegisterPage from './components/LoginRegister/RegisterPage';
 import Cart from './components/Cart/Cart';

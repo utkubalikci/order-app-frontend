@@ -1,15 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { CONFIRM_ORDER, GET_ORDERS_BY_USER_ID, GET_USER } from '../../service/HttpService';
+import { CONFIRM_ORDER, GET_ORDERS_BY_USER_ID} from '../../service/HttpService';
 import { Button } from 'primereact/button';
-import { DataView } from 'primereact/dataview';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
 
 export default function Orders() {
     const [orders, setOrders] = useState();
-    const navigate = useNavigate();
     const toast = useRef(null);
 
     const showSuccessToast = () => {
@@ -20,7 +17,6 @@ export default function Orders() {
         GET_ORDERS_BY_USER_ID(localStorage.getItem('currentUser'))
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 setOrders(data);
             })
             .catch(error => {

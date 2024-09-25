@@ -1,8 +1,7 @@
 import { Button } from "primereact/button";
-import { Checkbox } from "primereact/checkbox";
 import { InputText } from "primereact/inputtext";
 import React, { useRef, useState } from "react";
-import { LOGIN, REGISTER } from "../../service/HttpService";
+import { REGISTER } from "../../service/HttpService";
 import { Messages } from "primereact/messages";
 import { useNavigate } from "react-router-dom";
 

@@ -145,7 +145,6 @@ export const GET_CATEGORY = (categoryId) => {
 
 
 export const CREATE_ORDER_BY_USER_ID = (userId) => {
-    console.log("BODY:  ORDER OLUSTUR");
     var request = fetch(BASE_URL + 'order/createByUserId/' + userId, {
         method: 'POST',
         headers: {

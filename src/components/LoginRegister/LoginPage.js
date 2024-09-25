@@ -23,7 +23,6 @@ export default function LoginPage() {
     };
     const login = () => {
         clearMessages();
-        console.log(localStorage);
         LOGIN({ userName : userName, password : password })
             .then(response => response.json())
             .then((result) => {
@@ -31,12 +30,7 @@ export default function LoginPage() {
                 localStorage.setItem("refreshKey", result.refreshToken);
                 localStorage.setItem("currentUser", result.userId);
                 localStorage.setItem("userName", userName)
-                console.log(result);
-                console.log(localStorage);
                 navigate('/myProfile');
-                // setTimeout(() => {
-                //     navigate('/myProfile');
-                // }, 2000);
             })
             .catch((error) => {
                 addMessages();

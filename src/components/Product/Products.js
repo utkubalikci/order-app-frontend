@@ -78,7 +78,6 @@ export default function Products() {
     const addToCart = (productId) => {
         ADD_TO_CART({ userId: parseInt(localStorage.getItem('currentUser')), productId: productId, quantity: 1 })
             .then(() => {
-                console.log('Item added to cart')
                 showSuccessToast()
             })
             .catch(

@@ -9,7 +9,6 @@ export default function Profile() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(localStorage);
         GET_USER(localStorage.getItem('currentUser'))
             .then(response => response.json())
             .then((data) => {
@@ -20,7 +19,7 @@ export default function Profile() {
                 console.error('Error while getting user', error)
                 navigate('/toLogin');
             });
-    }, []);
+    }, [navigate]);
 
     const logout = () => {
         localStorage.removeItem('tokenKey');
@@ -43,7 +42,7 @@ export default function Profile() {
 
                     <Button label="Hesap Ayarları (Yakında)"  icon="pi pi-cog" className="my-1 w-full"/>
                     <Button label="Sepetim" severity='success' icon="pi pi-shopping-cart" className="my-1 w-full" onClick={() => navigate('/cart')}/>
-                    <Button label="Siparişlerim" severity='warning' icon="pi pi-shopping-bag" className="my-1 w-full" onClick={() => navigate('/cart')}/>
+                    <Button label="Siparişlerim" severity='warning' icon="pi pi-shopping-bag" className="my-1 w-full" onClick={() => navigate('/orders')}/>
                     <Button label="Çıkış Yap" severity='danger' icon="pi pi-sign-out" className="my-1 w-full" onClick={logout}/>
 
                 </div>

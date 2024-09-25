@@ -1,10 +1,9 @@
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import { Messages } from "primereact/messages";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ADD_TO_CART, CREATE_ORDER_BY_USER_ID, GET_CART, GET_CART_ITEMS, REMOVE_CART_BY_USER_ID, REMOVE_FROM_CART } from "../../service/HttpService";
+import { ADD_TO_CART, CREATE_ORDER_BY_USER_ID, GET_CART_ITEMS, REMOVE_CART_BY_USER_ID, REMOVE_FROM_CART } from "../../service/HttpService";
 import { Toast } from "primereact/toast";
 
 export default function Cart() {
@@ -23,13 +22,12 @@ export default function Cart() {
             .then(response => response.json())
             .then((data) => {
                 setCartItems(data);
-                console.log(data);
             })
             .catch((error) => {
                 console.error('Error while getting cart', error)
                 navigate('/toLogin');
             });
-    }, []);
+    }, [navigate]);
 
     const removeCart = () => {
         REMOVE_CART_BY_USER_ID(localStorage.getItem('currentUser'))
