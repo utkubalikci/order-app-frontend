@@ -26,6 +26,11 @@ export default function Navbar() {
             label: 'Hesabım',
             icon: 'pi pi-user',
             command: () => navigate('/myProfile')
+        },
+        {
+            label: 'Admin',
+            icon: 'pi pi-lock',
+            command: () => navigate('/admin')
         }
     ];
 

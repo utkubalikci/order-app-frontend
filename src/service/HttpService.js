@@ -180,3 +180,16 @@ export const CONFIRM_ORDER = (orderId) => {
 
     return request
 }
+
+export const CREATE_PRODUCT = (body) => {
+    var request = fetch(BASE_URL + 'products/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('tokenKey')
+        },
+        body: JSON.stringify(body)
+    })
+
+    return request
+}

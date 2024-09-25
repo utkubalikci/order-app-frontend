@@ -17,6 +17,7 @@ import RegisterPage from './components/LoginRegister/RegisterPage';
 import Cart from './components/Cart/Cart';
 import Navbar from './components/Navbar/Navbar';
 import Orders from './components/Orders/Orders';
+import AdminPage from './components/Admin/AdminPage';
 
 
 function App({ Component, pageProps }) {
@@ -27,6 +28,7 @@ function App({ Component, pageProps }) {
           <Navbar />
           <Routes>
             <Route path='/' element={<Products />} />
+            <Route path='/admin' element={<AdminPage />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/orders' element={<Orders />} />
