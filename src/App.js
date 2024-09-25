@@ -16,6 +16,7 @@ import LoginPage from './components/LoginRegister/LoginPage';
 import RegisterPage from './components/LoginRegister/RegisterPage';
 import Cart from './components/Cart/Cart';
 import Navbar from './components/Navbar/Navbar';
+import Orders from './components/Orders/Orders';
 
 
 function App({ Component, pageProps }) {
@@ -28,6 +29,7 @@ function App({ Component, pageProps }) {
             <Route path='/' element={<Products />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
+            <Route path='/orders' element={<Orders />} />
             <Route path="/myProfile" element={<Profile />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/toLogin" element={<LinkToLogin />} />

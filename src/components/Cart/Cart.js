@@ -4,13 +4,19 @@ import { DataTable } from "primereact/datatable";
 import { Messages } from "primereact/messages";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ADD_TO_CART, GET_CART, GET_CART_ITEMS, REMOVE_FROM_CART } from "../../service/HttpService";
+import { ADD_TO_CART, CREATE_ORDER_BY_USER_ID, GET_CART, GET_CART_ITEMS, REMOVE_CART_BY_USER_ID, REMOVE_FROM_CART } from "../../service/HttpService";
+import { Toast } from "primereact/toast";
 
 export default function Cart() {
     const [cartItems, setCartItems] = useState([]);
     const navigate = useNavigate();
-    const msgs = useRef(null);
     const totalPrice = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+    const toast = useRef(null);
+
+    const showSuccessToast = () => {
+        toast.current.show({ severity: 'success', summary: 'Sipariş oluşturuldu.', detail: "Siparişlerim sayfasına giderek siparişinizi onaylayabilirsiniz.", life: 3000 });
+    }
 
     useEffect(() => {
         GET_CART_ITEMS(localStorage.getItem('currentUser'))
@@ -21,12 +27,29 @@ export default function Cart() {
             })
             .catch((error) => {
                 console.error('Error while getting cart', error)
-                // navigate('/toLogin');
+                navigate('/toLogin');
             });
     }, []);
 
+    const removeCart = () => {
+        REMOVE_CART_BY_USER_ID(localStorage.getItem('currentUser'))
+            .then(() => {
+                setCartItems([]);
+            })
+            .catch((error) => {
+                console.error('Error while removing cart', error)
+            });
+    }
+
     const giveOrder = () => {
-        console.log('Order is given');
+        CREATE_ORDER_BY_USER_ID(localStorage.getItem('currentUser'))
+            .then(() => {
+                setCartItems([]);
+                showSuccessToast();
+            })
+            .catch((error) => {
+                console.error('Error while giving order', error)
+            });
     }
 
     const removeItem = (rowData) => {
@@ -71,18 +94,17 @@ export default function Cart() {
     const header = (
         <div className="flex flex-wrap align-items-center justify-content-between gap-2">
             <span className="text-xl text-900 font-bold">Ürünler</span>
-            <Button severity="danger" icon="pi pi-trash" rounded raised />
+            <Button severity="danger" icon="pi pi-trash" rounded raised onClick={removeCart} />
         </div>
     );
     const footer = <div>
         Toplam Fiyat: {totalPrice}₺
         <Button label="Sipariş Ver" icon="pi pi-cart-arrow-down" severity="success" className="w-full" onClick={giveOrder} />
-
-        <Messages ref={msgs} />
     </div>;
 
     return (
         <div className="mt-6 flex align-items-center justify-content-center">
+            <Toast ref={toast} />
             <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6">
                 <div className="text-center mb-5">
                     <div className="text-900 text-3xl font-medium mb-3">Sepetim</div>

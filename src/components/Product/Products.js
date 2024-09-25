@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button } from 'primereact/button';
 import { DataView, DataViewLayoutOptions } from 'primereact/dataview';
-import { Rating } from 'primereact/rating';
 import { Tag } from 'primereact/tag';
 import { classNames } from 'primereact/utils';
-import { ADD_TO_CART, GET_ALL_PRODUCTS } from '../../service/HttpService';
+import { ADD_TO_CART, GET_ALL_CATEGORIES, GET_ALL_PRODUCTS, GET_PRODUCT_BY_CATEGORY_ID } from '../../service/HttpService';
 import { ListBox } from 'primereact/listbox';
 import { Toast } from 'primereact/toast';
 
 export default function Products() {
     const [products, setProducts] = useState([]);
     const [layout, setLayout] = useState('grid');
-    const [categories, setCategories] = useState(['Bilgisayar', 'Telefon']);
+    const [categories, setCategories] = useState();
     const [selectedCategory, setSelectedCategory] = useState(null);
     const toast = useRef(null);
+
+
 
     const showSuccessToast = () => {
         toast.current.show({ severity: 'success', summary: 'Ürün sepete eklendi', life: 3000 });
@@ -24,11 +25,43 @@ export default function Products() {
     }
 
     useEffect(() => {
+        getCategoriesFromDb();
+        getProductsFromDb();
+    }, []);
+
+    useEffect(() => {
+        if (selectedCategory) {
+            getProductByCategoryId(selectedCategory.id);
+        } else {
+            getProductsFromDb();
+        }
+    }, [selectedCategory]);
+
+    const getCategoriesFromDb = () => {
+        GET_ALL_CATEGORIES()
+            .then((response) => response.json())
+            .then((data) => setCategories(data))
+            .catch((error) => console.error('Error while getting categories', error));
+    }
+
+    const getProductsFromDb = () => {
         GET_ALL_PRODUCTS()
             .then((response) => response.json())
             .then((data) => setProducts(data.slice(0, 12)))
             .catch((error) => console.error('Error while getting products', error));
-    }, []);
+    }
+
+    const getProductByCategoryId = (categoryId) => {
+        GET_PRODUCT_BY_CATEGORY_ID(categoryId)
+            .then((response) => response.json())
+            .then((data) => setProducts(data.slice(0, 12)))
+            .catch((error) => console.error('Error while getting products', error));
+    }
+
+    // const getNameById = (id) => {
+    //     const item = categories.find(item => item.id === id);
+    //     return item ? item.name : null;
+    // };
 
     const getSeverity = (product) => {
         if (product.stock > 5) {
@@ -64,11 +97,10 @@ export default function Products() {
                         <div className="flex flex-column align-items-center sm:align-items-start gap-3">
                             <div className="text-2xl font-bold text-900">{product.name}</div>
                             <div className="text-700">{product.description}</div> {/* Ürün açıklaması eklendi */}
-                            <Rating value={4} readOnly cancel={false}></Rating> {/* Sabit rating */}
                             <div className="flex align-items-center gap-3">
                                 <span className="flex align-items-center gap-2">
                                     <i className="pi pi-tag"></i>
-                                    <span className="font-semibold">Category ID: {product.categoryId}</span> {/* Kategori ID */}
+                                    <span className="font-semibold">{product.categoryId}</span> {/* Kategori ID */}
                                 </span>
                                 <Tag value={product.stock > 0 ? 'IN STOCK' : 'OUT OF STOCK'} severity={getSeverity(product)}></Tag>
                             </div>
@@ -90,7 +122,7 @@ export default function Products() {
                     <div className="flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
                         <div className="flex align-items-center gap-2">
                             <i className="pi pi-tag"></i>
-                            <span className="font-semibold">Category ID: {product.categoryId}</span> {/* Kategori ID */}
+                            <span className="font-semibold">{product.categoryId}</span> {/* Kategori ID */}
                         </div>
                         <Tag value={product.stock > 0 ? 'IN STOCK' : 'OUT OF STOCK'} severity={getSeverity(product)}></Tag>
                     </div>
@@ -133,7 +165,7 @@ export default function Products() {
         <div className="flex">
             <Toast ref={toast} />
             <div className="col-12 md:col-4">
-                <ListBox className="w-full" filter value={selectedCategory} onChange={(e) => setSelectedCategory(e.value)} options={categories} optionLabel="name" />
+                <ListBox filter value={selectedCategory} onChange={(e) => { setSelectedCategory(e.value) }} options={categories} optionLabel="name" className="w-full" />
             </div>
             <div className="col-12 md:col-8">
                 <DataView value={products} listTemplate={listTemplate} layout={layout} header={header()} />

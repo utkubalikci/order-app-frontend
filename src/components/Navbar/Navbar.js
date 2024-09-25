@@ -20,7 +20,7 @@ export default function Navbar() {
         {
             label: 'Siparişlerim',
             icon: 'pi pi-shopping-bag',
-            command: () => navigate('/')
+            command: () => navigate('/orders')
         },
         {
             label: 'Hesabım',
