@@ -1,5 +1,6 @@
 # Base image olarak Node.js kullanıyoruz
-FROM node:14
+# FROM node:14
+FROM node:16-alpine as builder
 
 # Çalışma dizinini ayarlıyoruz
 WORKDIR /app
@@ -8,7 +9,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Bağımlılıkları yüklüyoruz
-RUN npm install
+RUN NODE_ENV=development npm i
+# RUN npm install
 
 # Uygulama kodunu kopyalıyoruz
 COPY . .
