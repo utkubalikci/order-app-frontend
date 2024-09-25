@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/api/:path*",
-            "destination": "LINK/:path*"
+            "destination": "https://exquisite-art-production.up.railway.app/:path*"
         }
     ]
 }
