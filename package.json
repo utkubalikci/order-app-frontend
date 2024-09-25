@@ -40,5 +40,10 @@
       "last 1 safari version"
     ]
   },
-  "now-build": "react-scripts build && mv build dist"
+  "now-build": "react-scripts build && mv build dist",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  }
+  
 }
