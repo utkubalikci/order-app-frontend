@@ -3,8 +3,6 @@ import './App.css';
 import { PrimeReactProvider } from 'primereact/api';
 import Products from './components/Product/Products';
 
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 import LinkToLogin from './components/LoginRegister/LinkToLogin';
 import Profile from './components/Profile/Profile';
 import 'primereact/resources/themes/saga-blue/theme.css';   // Tema dosyası
