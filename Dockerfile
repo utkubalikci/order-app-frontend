@@ -20,4 +20,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Uygulamayı başlatıyoruz
-CMD ["npx", "serve", "-s", "build"]
+CMD ["npx", "serve", "-s", "build", "-l", "3000"]
