@@ -15,6 +15,9 @@ import Cart from './components/Cart/Cart';
 import Navbar from './components/Navbar/Navbar';
 import Orders from './components/Orders/Orders';
 import AdminPage from './components/Admin/AdminPage';
+import AddProduct from './components/Admin/AddProduct';
+import AddCategory from './components/Admin/AddCategory';
+import EditCategory from './components/Admin/EditCategory';
 
 
 function App({ Component, pageProps }) {
@@ -26,6 +29,9 @@ function App({ Component, pageProps }) {
           <Routes>
             <Route path='/' element={<Products />} />
             <Route path='/admin' element={<AdminPage />} />
+            <Route path='/admin/add/product' element={<AddProduct />} />
+            <Route path='/admin/add/category' element={<AddCategory />} />
+            <Route path='/admin/edit/category' element={<EditCategory />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/orders' element={<Orders />} />

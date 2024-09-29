@@ -192,3 +192,52 @@ export const CREATE_PRODUCT = (body) => {
 
     return request
 }
+
+export const CREATE_CATEGORY = (body) => {
+    var request = fetch(BASE_URL + 'category/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('tokenKey')
+        },
+        body: JSON.stringify(body)
+    })
+
+    return request
+}
+
+export const EDIT_CATEGORY = (body) => {
+    var request = fetch(BASE_URL + 'category/edit', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': localStorage.getItem('tokenKey')
+        },
+        body: JSON.stringify(body)
+    })
+
+    return request
+}
+
+// export const CREATE_CATEGORY = async (body) => {
+//     try {
+//         const response = await fetch(BASE_URL + 'category/add', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': localStorage.getItem('tokenKey')
+//             },
+//             body: JSON.stringify(body)
+//         });
+
+//         if (!response.ok) {
+//             const errorText = await response.text();
+//             throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+//         }
+
+//         return await response.json();
+//     } catch (error) {
+//         console.error('Error creating category:', error);
+//         throw error; // İsteğe bağlı: Hata fırlatma
+//     }
+// }
