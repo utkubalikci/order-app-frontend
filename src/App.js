@@ -18,6 +18,7 @@ import AdminPage from './components/Admin/AdminPage';
 import AddProduct from './components/Admin/AddProduct';
 import AddCategory from './components/Admin/AddCategory';
 import EditCategory from './components/Admin/EditCategory';
+import EditProduct from './components/Admin/EditProduct';
 
 
 function App({ Component, pageProps }) {
@@ -31,6 +32,7 @@ function App({ Component, pageProps }) {
             <Route path='/admin' element={<AdminPage />} />
             <Route path='/admin/add/product' element={<AddProduct />} />
             <Route path='/admin/add/category' element={<AddCategory />} />
+            <Route path='/admin/edit/product' element={<EditProduct />} />
             <Route path='/admin/edit/category' element={<EditCategory />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />

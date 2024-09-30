@@ -49,6 +49,10 @@ export default function EditCategory() {
     }
 
     const saveCategory = () => {
+        if (selectedCategory === null) {
+            showWarningToast("Lütfen bir kategori seçin.", "");
+            return;
+        }
         if (name === '' || description === '' || image === '') {
             showWarningToast("Lütfen tüm alanları doldurun.", "");
             return;
@@ -75,20 +79,24 @@ export default function EditCategory() {
                 <div>
                     <ListBox filter value={selectedCategory} onChange={(e) => { setSelectedCategory(e.value) }} options={categories} optionLabel="name" className="w-full mb-2" />
 
-                    <label htmlFor="categoryName" className="block text-900 font-medium mb-2">Kategori Adı:</label>
-                    <InputText id="categoryName" type="text" className="w-full mb-3" value={name} onChange={(e) => setName(e.target.value)} />
+                    {selectedCategory &&
+                        <div>
+                            <label htmlFor="categoryName" className="block text-900 font-medium mb-2">Kategori Adı:</label>
+                            <InputText id="categoryName" type="text" className="w-full mb-3" value={name} onChange={(e) => setName(e.target.value)} />
 
-                    <label htmlFor="categoryDescription" className="block text-900 font-medium mb-2">Ürün Açıklaması:</label>
-                    <InputTextarea id="categoryDescription" className="w-full mb-3" autoResize value={description} onChange={(e) => setDescription(e.target.value)} rows={5} cols={30} />
+                            <label htmlFor="categoryDescription" className="block text-900 font-medium mb-2">Ürün Açıklaması:</label>
+                            <InputTextarea id="categoryDescription" className="w-full mb-3" autoResize value={description} onChange={(e) => setDescription(e.target.value)} rows={5} cols={30} />
 
-                    <label htmlFor="categoryImg" className="block text-900 font-medium mb-2">Görsel Linki:</label>
-                    <InputText id="categoryImg" type="text" className="w-full mb-3" value={image} onChange={(e) => setImage(e.target.value)} />
+                            <label htmlFor="categoryImg" className="block text-900 font-medium mb-2">Görsel Linki:</label>
+                            <InputText id="categoryImg" type="text" className="w-full mb-3" value={image} onChange={(e) => setImage(e.target.value)} />
 
-                    <Button label="Kategoriyi Kaydet" icon="pi pi-save" className="w-full" onClick={saveCategory} />
+                            <Button label="Kategoriyi Kaydet" icon="pi pi-save" className="w-full" onClick={saveCategory} />
+                        </div>
+                    }
 
                 </div>
             </div>
 
-        </div>
+        </div >
     )
 }
