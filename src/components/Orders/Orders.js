@@ -47,13 +47,13 @@ export default function Orders() {
 
                 <div className="card">
                     <DataTable value={orders} sortMode="multiple" tableStyle={{ minWidth: '20rem' }}>
-                        <Column sortable header="Sipariş Numarası" body={
+                        <Column field='id' sortable header="Sipariş Numarası" body={
                             (rowData) => (
                                 <a className="font-medium no-underline ml-2 text-black-500 cursor-pointer" onClick={() => navigate('./'+rowData.id)}>{rowData.id}</a>
                             )
                         }></Column>
                         <Column field="status" sortable header="Durum"></Column>
-                        <Column field="orderDate" sortable header="Sipariş Tarihi"></Column>
+                        <Column field='orderDate' sortable header="Sipariş Tarihi" body={(rowData => (new Date(rowData.orderDate).toLocaleString()))}></Column>
                         <Column field="price" sortable header="Fiyat"></Column>
                         <Column header="Ürün Adedi" body={(rowData) => (rowData.orderItems.length)}></Column>
                         <Column header="Siparişi Onayla" body={(rowData) => (
