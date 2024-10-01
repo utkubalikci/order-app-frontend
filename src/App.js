@@ -19,6 +19,7 @@ import AddProduct from './components/Admin/AddProduct';
 import AddCategory from './components/Admin/AddCategory';
 import EditCategory from './components/Admin/EditCategory';
 import EditProduct from './components/Admin/EditProduct';
+import OrderPage from './components/Orders/OrderPage';
 
 
 function App({ Component, pageProps }) {
@@ -37,6 +38,7 @@ function App({ Component, pageProps }) {
             <Route path='/login' element={<LoginPage />} />
             <Route path='/register' element={<RegisterPage />} />
             <Route path='/orders' element={<Orders />} />
+            <Route path='/orders/:id' element={<OrderPage />} />
             <Route path="/myProfile" element={<Profile />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/toLogin" element={<LinkToLogin />} />

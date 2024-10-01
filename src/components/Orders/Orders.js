@@ -4,10 +4,12 @@ import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Toast } from 'primereact/toast';
+import { useNavigate } from 'react-router-dom';
 
 export default function Orders() {
     const [orders, setOrders] = useState();
     const toast = useRef(null);
+    const navigate = useNavigate();
 
     const showSuccessToast = () => {
         toast.current.show({ severity: 'success', summary: 'Siparişi onayladınız.', detail: "Kargoya verildiğinde tarafınıza bilgi verilecektir.", life: 3000 });
@@ -45,7 +47,11 @@ export default function Orders() {
 
                 <div className="card">
                     <DataTable value={orders} sortMode="multiple" tableStyle={{ minWidth: '20rem' }}>
-                        <Column field="id" sortable header="Sipariş Numarası"></Column>
+                        <Column sortable header="Sipariş Numarası" body={
+                            (rowData) => (
+                                <a className="font-medium no-underline ml-2 text-black-500 cursor-pointer" onClick={() => navigate('./'+rowData.id)}>{rowData.id}</a>
+                            )
+                        }></Column>
                         <Column field="status" sortable header="Durum"></Column>
                         <Column field="orderDate" sortable header="Sipariş Tarihi"></Column>
                         <Column field="price" sortable header="Fiyat"></Column>
